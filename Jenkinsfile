@@ -12,6 +12,12 @@ pipeline{
         stage("mvn build"){
             steps{
                 sh "mvn clean package"
+                sh "mv target/*.war target/world.war"
+                 }
+        }
+        stage("deploy war file"){
+            steps{
+                sh "cp -rf target/world.war /home/ravi/script/"
                  }
         }
     }
