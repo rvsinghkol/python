@@ -1,8 +1,11 @@
 pipeline{
     agent any
+    triggers{
+        cron('H/2 * * * *')
+    }
     environment{
         PATH = "/opt/maven/bin:$PATH"
-        properties([pipelineTriggers([pollSCM('H/2 * * * *')])])
+      
     }    
     stages{
         stage("welcome tooo"){
