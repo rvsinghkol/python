@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment{
         PATH = "/opt/maven/bin:$PATH"
-        pollSCM "H/2 * * * *"
+        pollSCM 'H/2 * * * *'
     }    
     stages{
         stage("welcome tooo"){
