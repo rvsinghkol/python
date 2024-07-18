@@ -20,6 +20,6 @@ pipeline{
             steps{
                 sh "cp -rf target/world.war /home/ravi/script/"
                  }      
-        }
+          }
     }
 }
