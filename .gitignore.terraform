@@ -1,0 +1,7 @@
+# Add these lines to your repo's .gitignore
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+tfplan.txt
+crash.log
