@@ -26,7 +26,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        AWS_DEFAULT_REGION = 'ap-south-1'
+        AWS_DEFAULT_REGION = 'ap-south-2'
         AWS_ACCOUNT_ID     = '707479681461'
         ECR_REPO           = 'docker_remote'
         ECR_REGISTRY       = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"

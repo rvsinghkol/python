@@ -10,7 +10,7 @@ cpu           = "1024" # 1 vCPU
 memory        = "2048" # 2 GB
 desired_count = 2
 min_count     = 2
-max_count     = 6
+max_count     = 2
 cpu_target    = 60
 
 # Network - existing VPC 10.0.0.0/16
@@ -41,6 +41,6 @@ alb_deletion_protection = true
 certificate_arn         = "" # set an ACM certificate ARN later to enable HTTPS
 
 # Alerts - put your team's distribution list here, e.g. "devops-team@yourcompany.com"
-alarm_email = ""
+alarm_email = "rvsingh146@gmail.com"
 
-log_retention_days = 30
+log_retention_days = 5
