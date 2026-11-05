@@ -11,9 +11,9 @@ terraform {
   # Bucket comes from the bootstrap output "state_bucket".
   # (Backend blocks cannot use variables, so it is written here directly.)
   backend "s3" {
-    bucket       = "docker-remote-tfstate-717479681461"
+    bucket       = "docker-remote-tfstate-707479681461"
     key          = "app/prod/terraform.tfstate"
-    region       = "ap-south-1"
+    region       = "ap-south-2"
     encrypt      = true
     use_lockfile = true # stops two builds changing prod at the same time
   }
