@@ -37,7 +37,7 @@ create_vpc_endpoints = false
 
 # Load balancer
 health_check_path       = "/"
-alb_deletion_protection = true
+alb_deletion_protection = false
 certificate_arn         = "" # set an ACM certificate ARN later to enable HTTPS
 
 # Alerts - put your team's distribution list here, e.g. "devops-team@yourcompany.com"
