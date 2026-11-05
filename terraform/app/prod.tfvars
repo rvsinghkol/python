@@ -32,7 +32,7 @@ private_route_table_ids = [
 
 # Private subnets ALREADY route 0.0.0.0/0 -> nat-1ebf1a695ca6c7cf5 (checked 2026-11-03),
 # so Terraform must NOT create a NAT or endpoints. Keep both false.
-create_nat_gateway   = false
+create_nat_gateway   = true
 create_vpc_endpoints = false
 
 # Load balancer
