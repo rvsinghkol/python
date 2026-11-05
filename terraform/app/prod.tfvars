@@ -27,13 +27,13 @@ private_subnet_ids = [
 # Route table of the private subnets - get it from scripts/check-network.sh
 # (VPC console -> Subnets -> private subnet -> "Route table" tab). List each ID once.
 private_route_table_ids = [
-  "rtb-REPLACE_ME",
+  "rtb-0c8d33156de712e5a", # shared by both private subnets
 ]
 
-# Your VPC has an Internet Gateway (igw-02c95d919709327c9) but NO NAT gateway.
-# Choose ONE:
-create_nat_gateway   = true  # A) NAT: tasks can pull from ECR AND call internet APIs
-create_vpc_endpoints = false # B) endpoints: ECR/S3/Logs only, no internet
+# Private subnets ALREADY route 0.0.0.0/0 -> nat-1ebf1a695ca6c7cf5 (checked 2026-11-03),
+# so Terraform must NOT create a NAT or endpoints. Keep both false.
+create_nat_gateway   = false
+create_vpc_endpoints = false
 
 # Load balancer
 health_check_path       = "/"
@@ -43,4 +43,4 @@ certificate_arn         = "" # set an ACM certificate ARN later to enable HTTPS
 # Alerts - put your team's distribution list here, e.g. "devops-team@yourcompany.com"
 alarm_email = "rvsingh146@gmail.com"
 
-log_retention_days = 5
+log_retention_days = 30
