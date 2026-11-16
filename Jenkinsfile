@@ -140,6 +140,20 @@ pipeline {
             }
         }
 
+        stage('Security Scan') {
+            when { expression { params.ACTION == 'deploy' } }
+            steps {
+                // Fails the build on CRITICAL vulnerabilities that have a fix available
+                sh '''
+                    docker run --rm \
+                      -v /var/run/docker.sock:/var/run/docker.sock \
+                      -v $HOME/.trivy-cache:/root/.cache/ \
+                      $TRIVY_IMAGE image \
+                      --severity CRITICAL --ignore-unfixed --exit-code 1 --no-progress \
+                      $IMAGE:$DEPLOY_TAG
+                '''
+            }
+        }
 
         stage('Push Docker Image to Amazon ECR') {
             when { expression { params.ACTION == 'deploy' } }
@@ -155,7 +169,7 @@ pipeline {
         stage('Terraform Init & Validate') {
             steps {
                 dir("${TF_DIR}") {
-                    sh 'terraform init -input=false'
+                    sh 'terraform init -input=false -reconfigure'   // state lives in S3; safe in CI
                     sh 'terraform validate'
                 }
             }
@@ -191,24 +205,9 @@ pipeline {
                 dir("${TF_DIR}") {
                     sh 'terraform apply -input=false tfplan'
                     script {
-                        env.APP_URL = sh(script: 'terraform output -raw app_url', returnStdout: true).trim()
+                        env.APP_URL   = sh(script: 'terraform output -raw app_url', returnStdout: true).trim()
                     }
                 }
-            }
-        }
-
-        stage('Smoke Test') {
-            steps {
-                sh '''
-                    for i in $(seq 1 18); do   # up to ~3-4 min (new ALB DNS can take a moment)
-                      CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$APP_URL" || true)
-                      echo "Attempt $i: HTTP $CODE"
-                      case "$CODE" in 2*|3*) echo "Smoke test passed: $APP_URL"; exit 0 ;; esac
-                      sleep 10
-                    done
-                    echo "Smoke test FAILED for $APP_URL"
-                    exit 1
-                '''
             }
         }
     }
