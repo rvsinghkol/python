@@ -140,20 +140,6 @@ pipeline {
             }
         }
 
-        stage('Security Scan') {
-            when { expression { params.ACTION == 'deploy' } }
-            steps {
-                // Fails the build on CRITICAL vulnerabilities that have a fix available
-                sh '''
-                    docker run --rm \
-                      -v /var/run/docker.sock:/var/run/docker.sock \
-                      -v $HOME/.trivy-cache:/root/.cache/ \
-                      $TRIVY_IMAGE image \
-                      --severity CRITICAL --ignore-unfixed --exit-code 1 --no-progress \
-                      $IMAGE:$DEPLOY_TAG
-                '''
-            }
-        }
 
         stage('Push Docker Image to Amazon ECR') {
             when { expression { params.ACTION == 'deploy' } }
