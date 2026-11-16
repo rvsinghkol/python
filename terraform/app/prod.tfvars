@@ -38,7 +38,9 @@ create_vpc_endpoints = false
 # Load balancer
 health_check_path       = "/"
 alb_deletion_protection = false
-certificate_arn         = "" # set an ACM certificate ARN later to enable HTTPS
+#certificate_arn         = "" # set an ACM certificate ARN later to enable HTTPS
+certificate_arn = "arn:aws:acm:ap-south-2:707479681461:certificate/48c59bbb-2701-4dec-b9f8-19f095868fe7"
+domain_name     = "portal89.m1xchange.com" # e.g. "app.yourdomain.com" - must be covered by the certificate
 
 # Alerts - put your team's distribution list here, e.g. "devops-team@yourcompany.com"
 alarm_email = "rvsingh146@gmail.com"
